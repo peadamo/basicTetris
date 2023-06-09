@@ -7,7 +7,7 @@ import {
   gameArea_x,
   gameArea_y,
 } from "./core.js";
-import { columns, grid, rows } from "./gameAreaConfig.js";
+import { columns, grid, rows, rowsGrid } from "./gameAreaConfig.js";
 
 export const blocksArray = [];
 let blockCounter = 0;
@@ -28,30 +28,10 @@ export const newBlock = (posX, posY, color1, color2) => {
   );
   block.addChild(blockInside);
 
+  //////////////
+  // const basicText = new PIXI.Text(`${blockCounter}`);
 
-
-
-
-//////////////
-// const basicText = new PIXI.Text(`${blockCounter}`);
-
-// block.addChild(basicText);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // block.addChild(basicText);
 
   block.x = posX;
   block.y = posY;
@@ -67,15 +47,21 @@ export const newBlock = (posX, posY, color1, color2) => {
 };
 export const rotation = { figure: undefined, rot: 0 };
 export const newFigureBlocks = [];
-export const newFigure = () => {
+
+
+export const newFigure = (figureCode) => {
   let start_X = gameArea_x + Math.floor(columns / 2) * blockSize - blockSize;
 
-  let start_Y = gameArea_y + gameArea_Height - rows * blockSize + blockSize * 1;
+  let start_Y = gameArea_y + gameArea_Height - rows * blockSize + blockSize * -1;
 
-  //   let randomFigure = Math.floor(Math.random() * 6);
-  let randomFigure = 1;
 
-  switch (randomFigure) {
+if(figureCode===undefined){
+
+
+  figureCode=Math.floor(Math.random() * 7);
+}
+
+  switch (figureCode) {
     case 0:
       L_block(start_X, start_Y);
       rotation.figure = "L_block";
@@ -113,6 +99,13 @@ export const newFigure = () => {
 
       break;
 
+      case 6:
+        T_block(start_X, start_Y);
+        rotation.figure = "T_block";
+        rotation.rot = 0;
+  
+        break;
+
     default:
       break;
   }
@@ -123,6 +116,13 @@ export const newFigure = () => {
   newFigureBlocks[1] = blocksArray[blocksArray.length - 3].code;
 
   newFigureBlocks[0] = blocksArray[blocksArray.length - 4].code;
+};
+
+const T_block = (start_X, start_Y) => {
+  newBlock(start_X+ blockSize, start_Y, 0xcc5275, 0x981f42);
+  newBlock(start_X+ blockSize- blockSize, start_Y - blockSize*0, 0xcc5275, 0x981f42);
+  newBlock(start_X+ blockSize, start_Y - blockSize * 1, 0xcc5275, 0x981f42);
+  newBlock(start_X+ blockSize + blockSize, start_Y, 0xcc5275, 0x981f42);
 };
 
 const L_block = (start_X, start_Y) => {
@@ -231,6 +231,7 @@ export const downBlockPosition = () => {
     }
 
     newFigure();
+    checkCompleteRow()
   }
 };
 
@@ -293,11 +294,10 @@ export const moveLeft = () => {
 };
 
 export const rotate = () => {
-
-    let block0=blocksArray[newFigureBlocks[0]]
-    let block1=blocksArray[newFigureBlocks[1]]
-    let block2=blocksArray[newFigureBlocks[2]]
-    let block3=blocksArray[newFigureBlocks[3]]
+  let block0 = blocksArray[newFigureBlocks[0]];
+  let block1 = blocksArray[newFigureBlocks[1]];
+  let block2 = blocksArray[newFigureBlocks[2]];
+  let block3 = blocksArray[newFigureBlocks[3]];
 
   let block0_X;
   let block1_X;
@@ -308,284 +308,556 @@ export const rotate = () => {
   let block2_Y;
   let block3_Y;
 
-
-
-
-
   if (rotation.figure === "L_block") {
-switch (rotation.rot) {
-    case 0:
-              //0
-              block0_X = block0.posX - blockSize;
-              block0_Y = block0.posY - blockSize
-              //1
-              block1_X = block1.posX 
-              block1_Y = block1.posY 
-              //2
-              block2_X = block2.posX + blockSize
-              block2_Y = block2.posY + blockSize
-              //3
-              block3_X = block3.posX - blockSize*2
-              block3_Y = block3.posY 
-      
-              rotation.rot=1
-      
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX - blockSize;
+        block0_Y = block0.posY - blockSize;
+        //1
+        block1_X = block1.posX;
+        block1_Y = block1.posY;
+        //2
+        block2_X = block2.posX + blockSize;
+        block2_Y = block2.posY + blockSize;
+        //3
+        block3_X = block3.posX - blockSize * 2;
+        block3_Y = block3.posY;
+
+        rotation.rot = 1;
+
         break;
 
-        case 1:
-            //0
-            block0_X = block0.posX + blockSize*1
-            block0_Y = block0.posY + blockSize*-1
-            //1
-            block1_X = block1.posX + blockSize*0
-            block1_Y = block1.posY + blockSize*0
-            //2
-            block2_X = block2.posX + blockSize*-1
-            block2_Y = block2.posY + blockSize*1
-            //3
-            block3_X = block3.posX + blockSize*0
-            block3_Y = block3.posY + blockSize*-2
-    
-            rotation.rot=2
-    
-      break;
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * -1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * 1;
+        //3
+        block3_X = block3.posX + blockSize * 0;
+        block3_Y = block3.posY + blockSize * -2;
+
+        rotation.rot = 2;
+
+        break;
 
       case 2:
-      //0
-      block0_X = block0.posX + blockSize*1
-      block0_Y = block0.posY + blockSize*1
-      //1
-      block1_X = block1.posX + blockSize*0
-      block1_Y = block1.posY + blockSize*0
-      //2
-      block2_X = block2.posX + blockSize*-1
-      block2_Y = block2.posY + blockSize*-1
-      //3
-      block3_X = block3.posX + blockSize*2
-      block3_Y = block3.posY + blockSize*0
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * 2;
+        block3_Y = block3.posY + blockSize * 0;
 
-        rotation.rot=3
+        rotation.rot = 3;
 
-  break;
-
-  case 3:
-      //0
-      block0_X = block0.posX + blockSize*-1
-      block0_Y = block0.posY + blockSize*1
-      //1
-      block1_X = block1.posX + blockSize*0
-      block1_Y = block1.posY + blockSize*0
-      //2
-      block2_X = block2.posX + blockSize*1
-      block2_Y = block2.posY + blockSize*-1
-      //3
-      block3_X = block3.posX + blockSize*0
-      block3_Y = block3.posY + blockSize*2
-
-    rotation.rot=0
-
-break;
-
-    default:
         break;
-}
 
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * -1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * 0;
+        block3_Y = block3.posY + blockSize * 2;
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (rotation.figure === "L_inverted_block") {
+    console.log("L_inverted_block");
+    console.log(rotation.rot);
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX - blockSize;
+        block0_Y = block0.posY - blockSize;
+        //1
+        block1_X = block1.posX;
+        block1_Y = block1.posY;
+        //2
+        block2_X = block2.posX + blockSize;
+        block2_Y = block2.posY + blockSize;
+        //3
+        block3_X = block3.posX;
+        block3_Y = block3.posY - blockSize * 2;
+
+        rotation.rot = 1;
+
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * -1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * 1;
+        //3
+        block3_X = block3.posX + blockSize * 2;
+        block3_Y = block3.posY + blockSize * 0;
+
+        rotation.rot = 2;
+
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * 0;
+        block3_Y = block3.posY + blockSize * 2;
+
+        rotation.rot = 3;
+
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * -1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * -2;
+        block3_Y = block3.posY + blockSize * 0;
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (rotation.figure === "S_inverted_block") {
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX + blockSize * 0;
+        block0_Y = block0.posY + blockSize * -2;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 1;
+        block2_Y = block2.posY + blockSize * 1;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 1;
+
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 2;
+        block0_Y = block0.posY + blockSize * 0;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * 1;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 2;
+
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX + blockSize * 0;
+        block0_Y = block0.posY + blockSize * 2;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 3;
+
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * -2;
+        block0_Y = block0.posY + blockSize * 0;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 1;
+        block2_Y = block2.posY + blockSize * -1;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (rotation.figure === "S_block") {
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX + blockSize * -1;
+        block0_Y = block0.posY + blockSize * -1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 2;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 1;
+
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * -1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * 2;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 2;
+
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX + blockSize * 1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * -2;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 3;
+
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * -1;
+        block0_Y = block0.posY + blockSize * 1;
+        //1
+        block1_X = block1.posX + blockSize * 0;
+        block1_Y = block1.posY + blockSize * 0;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * -2;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (rotation.figure === "I_block") {
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX + blockSize * -2;
+        block0_Y = block0.posY + blockSize * -2;
+        //1
+        block1_X = block1.posX + blockSize * -1;
+        block1_Y = block1.posY + blockSize * -1;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 1;
+
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 2;
+        block0_Y = block0.posY + blockSize * -2;
+        //1
+        block1_X = block1.posX + blockSize * 1;
+        block1_Y = block1.posY + blockSize * -1;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * 1;
+
+        rotation.rot = 2;
+
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX + blockSize * 2;
+        block0_Y = block0.posY + blockSize * 2;
+        //1
+        block1_X = block1.posX + blockSize * 1;
+        block1_Y = block1.posY + blockSize * 1;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * -1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 3;
+
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * -2;
+        block0_Y = block0.posY + blockSize * 2;
+        //1
+        block1_X = block1.posX + blockSize * -1;
+        block1_Y = block1.posY + blockSize * 1;
+        //2
+        block2_X = block2.posX + blockSize * 0;
+        block2_Y = block2.posY + blockSize * 0;
+        //3
+        block3_X = block3.posX + blockSize * 1;
+        block3_Y = block3.posY + blockSize * -1;
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+  if (rotation.figure === "T_block") {
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX + blockSize * 0
+        block0_Y = block0.posY + blockSize * 0
+        //1
+        block1_X = block1.posX + blockSize * 1
+        block1_Y = block1.posY + blockSize * -1
+        //2
+        block2_X = block2.posX + blockSize * 1
+        block2_Y = block2.posY + blockSize * 1
+        //3
+        block3_X = block3.posX + blockSize * -1
+        block3_Y = block3.posY + blockSize * 1
+
+        rotation.rot = 1;
+
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX + blockSize * 0
+        block0_Y = block0.posY + blockSize * 0
+        //1
+        block1_X = block1.posX + blockSize * 1
+        block1_Y = block1.posY + blockSize * 1
+        //2
+        block2_X = block2.posX + blockSize * -1
+        block2_Y = block2.posY + blockSize * 1
+        //3
+        block3_X = block3.posX + blockSize * -1
+        block3_Y = block3.posY + blockSize * -1
+
+        rotation.rot = 2;
+
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX + blockSize * 0
+        block0_Y = block0.posY + blockSize * 0
+        //1
+        block1_X = block1.posX + blockSize * -1
+        block1_Y = block1.posY + blockSize * 1
+        //2
+        block2_X = block2.posX + blockSize * -1
+        block2_Y = block2.posY + blockSize * -1
+        //3
+        block3_X = block3.posX + blockSize * 1
+        block3_Y = block3.posY + blockSize * -1
+
+        rotation.rot = 3;
+
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX + blockSize * 0
+        block0_Y = block0.posY + blockSize * 0
+        //1
+        block1_X = block1.posX + blockSize * -1
+        block1_Y = block1.posY + blockSize * -1
+        //2
+        block2_X = block2.posX + blockSize * 1
+        block2_Y = block2.posY + blockSize * -1
+        //3
+        block3_X = block3.posX + blockSize * 1
+        block3_Y = block3.posY + blockSize * 1
+
+        rotation.rot = 0;
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+
+  let newPosArray=[
+
+   {x:  block0_X,y:
+
+     block0_Y},
+
+   {x:  block1_X,y:
+
+     block1_Y},
+
+   {x:  block2_X,y:
+
+     block2_Y},
+
+    {x: block3_X,y:
+
+     block3_Y},
+
+
+
+
+
+
+
+  ]
+
+
+
+
+
+  let rotateNew = true;
+  for (let index = 0; index < newFigureBlocks.length; index++) {
+    const blockIndex = newFigureBlocks[index];
+    let block = blocksArray[blockIndex];
+
+    let nextGridPoint = grid.find(
+      (e) => e.x === newPosArray[index].x && e.y === newPosArray[index].y
+    );
+
+    if (nextGridPoint !== undefined) {
+      if (nextGridPoint.free === false) {
+        rotateNew = false;
+      }
+    }
+  }
+
+  if (rotateNew) {
+
+
+
+    block0.posX = block0_X;
+    block0.sprite.x = block0_X;
+    block1.posX = block1_X;
+    block1.sprite.x = block1_X;
+    block2.posX = block2_X;
+    block2.sprite.x = block2_X;
+    block3.posX = block3_X;
+    block3.sprite.x = block3_X;
+  
+    block0.posY = block0_Y;
+    block0.sprite.y = block0_Y;
+    block1.posY = block1_Y;
+    block1.sprite.y = block1_Y;
+    block2.posY = block2_Y;
+    block2.sprite.y = block2_Y;
+    block3.posY = block3_Y;
+    block3.sprite.y = block3_Y;
 
   }
 
 
-  if (rotation.figure === "L_inverted_block") {
-    switch (rotation.rot) {
-        case 0:
-                  //0
-                  block0_X = block0.posX - blockSize;
-                  block0_Y = block0.posY - blockSize
-                  //1
-                  block1_X = block1.posX 
-                  block1_Y = block1.posY 
-                  //2
-                  block2_X = block2.posX + blockSize
-                  block2_Y = block2.posY + blockSize
-                  //3
-                  block3_X = block3.posX 
-                  block3_Y = block3.posY -blockSize*2
-          
-                  rotation.rot=1
-          
-            break;
-    
-            case 1:
-                //0
-                block0_X = block0.posX + blockSize*1
-                block0_Y = block0.posY + blockSize*-1
-                //1
-                block1_X = block1.posX + blockSize*0
-                block1_Y = block1.posY + blockSize*0
-                //2
-                block2_X = block2.posX + blockSize*-1
-                block2_Y = block2.posY + blockSize*1
-                //3
-                block3_X = block3.posX + blockSize*2
-                block3_Y = block3.posY + blockSize*0
-        
-                rotation.rot=2
-        
-          break;
-    
-          case 2:
-       
-        //0
-        block0_X = block0.posX + blockSize*0
-        block0_Y = block0.posY + blockSize*0
-        //1
-        block1_X = block1.posX + blockSize*0
-        block1_Y = block1.posY + blockSize*0
-        //2
-        block2_X = block2.posX + blockSize*0
-        block2_Y = block2.posY + blockSize*0
-        //3
-        block3_X = block3.posX + blockSize*0
-        block3_Y = block3.posY + blockSize*2
-    
-            rotation.rot=3
-    
-      break;
-    
-      case 3:
-    //0
-    block0_X = block0.posX + blockSize*0
-    block0_Y = block0.posY + blockSize*0
-    //1
-    block1_X = block1.posX + blockSize*0
-    block1_Y = block1.posY + blockSize*0
-    //2
-    block2_X = block2.posX + blockSize*0
-    block2_Y = block2.posY + blockSize*0
-    //3
-    block3_X = block3.posX + blockSize*0
-    block3_Y = block3.posY + blockSize*0
-    
-        rotation.rot=0
-    
-    break;
-    
-        default:
-            break;
-    }
-    
-    
-      }
-
-      if (rotation.figure === "S_inverted_block") {
-        switch (rotation.rot) {
-            case 0:
-                   //0
-        block0_X = block0.posX + blockSize*0
-        block0_Y = block0.posY + blockSize*0
-        //1
-        block1_X = block1.posX + blockSize*0
-        block1_Y = block1.posY + blockSize*0
-        //2
-        block2_X = block2.posX + blockSize*0
-        block2_Y = block2.posY + blockSize*0
-        //3
-        block3_X = block3.posX + blockSize*0
-        block3_Y = block3.posY + blockSize*0
-              
-                      rotation.rot=1
-              
-                break;
-        
-                case 1:
-                    //0
-                    block0_X = block0.posX + blockSize*0
-                    block0_Y = block0.posY + blockSize*0
-                    //1
-                    block1_X = block1.posX + blockSize*0
-                    block1_Y = block1.posY + blockSize*0
-                    //2
-                    block2_X = block2.posX + blockSize*0
-                    block2_Y = block2.posY + blockSize*0
-                    //3
-                    block3_X = block3.posX + blockSize*0
-                    block3_Y = block3.posY + blockSize*0
-            
-                    rotation.rot=2
-            
-              break;
-        
-              case 2:
-           
-            //0
-            block0_X = block0.posX + blockSize*0
-            block0_Y = block0.posY + blockSize*0
-            //1
-            block1_X = block1.posX + blockSize*0
-            block1_Y = block1.posY + blockSize*0
-            //2
-            block2_X = block2.posX + blockSize*0
-            block2_Y = block2.posY + blockSize*0
-            //3
-            block3_X = block3.posX + blockSize*0
-            block3_Y = block3.posY + blockSize*0
-        
-                rotation.rot=3
-        
-          break;
-        
-          case 3:
-        //0
-        block0_X = block0.posX + blockSize*0
-        block0_Y = block0.posY + blockSize*0
-        //1
-        block1_X = block1.posX + blockSize*0
-        block1_Y = block1.posY + blockSize*0
-        //2
-        block2_X = block2.posX + blockSize*0
-        block2_Y = block2.posY + blockSize*0
-        //3
-        block3_X = block3.posX + blockSize*0
-        block3_Y = block3.posY + blockSize*0
-        
-            rotation.rot=0
-        
-        break;
-        
-            default:
-                break;
-        }
-        
-        
-          }
-        
-    
-
-
-
-
-
-
-
-
-
-  block0.posX=block0_X
-  block0.sprite.x=block0_X
-  block1.posX=block1_X
-  block1.sprite.x=block1_X
-  block2.posX=block2_X
-  block2.sprite.x=block2_X
-  block3.posX=block3_X
-  block3.sprite.x=block3_X
-
-
-  block0.posY=block0_Y
-  block0.sprite.y=block0_Y
-  block1.posY=block1_Y
-  block1.sprite.y=block1_Y
-  block2.posY=block2_Y
-  block2.sprite.y=block2_Y
-  block3.posY=block3_Y
-  block3.sprite.y=block3_Y
 
 
 
@@ -598,4 +870,49 @@ break;
 
 
 
+
+
+
+
+
+
+
+
+
+ 
 };
+
+
+
+const checkCompleteRow = () => {
+
+
+  console.log(  rowsGrid  )
+
+
+// for (let index = 0; index < rowsGrid.length; index++) {
+//   const element = rowsGrid[index];
+  
+// let rowGridBlocks=
+
+
+// grid.filter(
+//   (e) => e.x === element
+// );
+
+
+// console.log(  rowGridBlocks  )
+
+
+
+
+
+
+
+
+
+
+// }
+
+
+}
