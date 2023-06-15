@@ -10,9 +10,13 @@ import {
 } from "./core.js";
 export let rows = 0;
 export let columns = 0;
-export const rowsGrid = [];
 
+export const rowsGrid = [];
+const rowsYpos=[]
 export const grid = [];
+let lastColumnX=undefined
+let firstColumnX=undefined
+
 export const startGameArea = (params) => {
   //game area sizes
 
@@ -70,16 +74,35 @@ export const startGameArea = (params) => {
   for (let indexColumn = -1; indexColumn < columns + 1; indexColumn++) {
 
 
-    for (let indexRow = 0; indexRow < rows; indexRow++) {
+    for (let indexRow = 0; indexRow < rows+5; indexRow++) {
       let xPos = indexColumn * blockSize + gameArea_x;
 
       let YPos = gameArea_y + gameArea_Height - indexRow * blockSize;
 
       let free = true;
+//pushea posiciones de alturaa
+      if (indexColumn === 0) {
+
+
+        rowsYpos.push(YPos)
+
+        // let gridPoint = new PIXI.Graphics();
+        // gridPoint.beginFill(0xff5722);
+        // gridPoint.drawRect(xPos, YPos, 5, 5);
+        // tetrisAreaContainer.addChild(gridPoint);
+      }
+
+
+      if (indexColumn === -1) {
+        firstColumnX=xPos
+  
+      }
+
 
 
       if (indexColumn === columns) {
         free = false;
+        lastColumnX=xPos
         // let gridPoint = new PIXI.Graphics();
         // gridPoint.beginFill(0xff5722);
         // gridPoint.drawRect(xPos, YPos, 5, 5);
@@ -109,21 +132,24 @@ export const startGameArea = (params) => {
 
 
 
-const tempPointBlabla=
+for (let index = 0; index < rowsYpos.length; index++) {
+  const row_Y = rowsYpos[index];
 
-  grid.filter(
-    (e) => e.y === grid[0].y
+  let completeRow = grid.filter(
+    (e) => e.y === row_Y && e.x!==lastColumnX && e.x!==firstColumnX
   );
 
-   
+if(index!==0){
 
-for (let index = 0; index < tempPointBlabla.length; index++) {
-  const element = tempPointBlabla[index];
   
-  rowsGrid.push(element)
+  
+  rowsGrid.push(  completeRow )
+}
 
 
 }
+   
+
 
 
   //testBlock

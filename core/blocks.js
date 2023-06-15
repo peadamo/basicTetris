@@ -65,45 +65,38 @@ if(figureCode===undefined){
     case 0:
       L_block(start_X, start_Y);
       rotation.figure = "L_block";
-      rotation.rot = 0;
-
+      
       break;
     case 1:
       L_inverted_block(start_X, start_Y);
       rotation.figure = "L_inverted_block";
-      rotation.rot = 0;
-
+      
       break;
     case 2:
       S_inverted_block(start_X, start_Y);
       rotation.figure = "S_inverted_block";
-      rotation.rot = 0;
-
+      
       break;
     case 3:
       S_block(start_X, start_Y);
       rotation.figure = "S_block";
-      rotation.rot = 0;
-
+      
       break;
     case 4:
       I_block(start_X, start_Y);
       rotation.figure = "I_block";
-      rotation.rot = 0;
-
+      
       break;
     case 5:
       square_block(start_X, start_Y);
       rotation.figure = "square_block";
-      rotation.rot = 0;
-
+      
       break;
 
       case 6:
         T_block(start_X, start_Y);
         rotation.figure = "T_block";
-        rotation.rot = 0;
-  
+          
         break;
 
     default:
@@ -308,6 +301,89 @@ export const rotate = () => {
   let block2_Y;
   let block3_Y;
 
+
+
+
+  if (rotation.figure === "square_block") {
+    switch (rotation.rot) {
+      case 0:
+        //0
+        block0_X = block0.posX 
+        block0_Y = block0.posY 
+        //1
+        block1_X = block1.posX;
+        block1_Y = block1.posY;
+        //2
+        block2_X = block2.posX 
+        block2_Y = block2.posY 
+        //3
+        block3_X = block3.posX 
+        block3_Y = block3.posY;
+
+        
+        break;
+
+      case 1:
+        //0
+        block0_X = block0.posX 
+        block0_Y = block0.posY 
+        //1
+        block1_X = block1.posX 
+        block1_Y = block1.posY 
+        //2
+        block2_X = block2.posX 
+        block2_Y = block2.posY 
+        //3
+        block3_X = block3.posX 
+        block3_Y = block3.posY 
+
+        
+        break;
+
+      case 2:
+        //0
+        block0_X = block0.posX 
+        block0_Y = block0.posY 
+        //1
+        block1_X = block1.posX 
+        block1_Y = block1.posY 
+        //2
+        block2_X = block2.posX 
+        block2_Y = block2.posY 
+        //3
+        block3_X = block3.posX 
+        block3_Y = block3.posY 
+
+        
+        break;
+
+      case 3:
+        //0
+        block0_X = block0.posX 
+        block0_Y = block0.posY 
+        //1
+        block1_X = block1.posX 
+        block1_Y = block1.posY 
+        //2
+        block2_X = block2.posX 
+        block2_Y = block2.posY 
+        //3
+        block3_X = block3.posX 
+        block3_Y = block3.posY 
+
+        
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+
+
+
+
   if (rotation.figure === "L_block") {
     switch (rotation.rot) {
       case 0:
@@ -324,8 +400,7 @@ export const rotate = () => {
         block3_X = block3.posX - blockSize * 2;
         block3_Y = block3.posY;
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -342,8 +417,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 0;
         block3_Y = block3.posY + blockSize * -2;
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -360,8 +434,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 2;
         block3_Y = block3.posY + blockSize * 0;
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -378,8 +451,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 0;
         block3_Y = block3.posY + blockSize * 2;
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -388,8 +460,6 @@ export const rotate = () => {
   }
 
   if (rotation.figure === "L_inverted_block") {
-    console.log("L_inverted_block");
-    console.log(rotation.rot);
     switch (rotation.rot) {
       case 0:
         //0
@@ -405,8 +475,7 @@ export const rotate = () => {
         block3_X = block3.posX;
         block3_Y = block3.posY - blockSize * 2;
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -423,8 +492,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 2;
         block3_Y = block3.posY + blockSize * 0;
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -441,8 +509,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 0;
         block3_Y = block3.posY + blockSize * 2;
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -459,8 +526,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -2;
         block3_Y = block3.posY + blockSize * 0;
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -484,8 +550,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -502,8 +567,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -520,8 +584,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -538,8 +601,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -563,8 +625,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -581,8 +642,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -599,8 +659,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -617,8 +676,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -642,8 +700,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -660,8 +717,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * 1;
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -678,8 +734,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -696,8 +751,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1;
         block3_Y = block3.posY + blockSize * -1;
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -722,8 +776,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1
         block3_Y = block3.posY + blockSize * 1
 
-        rotation.rot = 1;
-
+        
         break;
 
       case 1:
@@ -740,8 +793,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * -1
         block3_Y = block3.posY + blockSize * -1
 
-        rotation.rot = 2;
-
+        
         break;
 
       case 2:
@@ -758,8 +810,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1
         block3_Y = block3.posY + blockSize * -1
 
-        rotation.rot = 3;
-
+        
         break;
 
       case 3:
@@ -776,8 +827,7 @@ export const rotate = () => {
         block3_X = block3.posX + blockSize * 1
         block3_Y = block3.posY + blockSize * 1
 
-        rotation.rot = 0;
-
+        
         break;
 
       default:
@@ -835,7 +885,13 @@ export const rotate = () => {
 
   if (rotateNew) {
 
+    rotation.rot++
+    if( rotation.rot===4){
+      rotation.rot=0
 
+
+    }
+    console.log( rotation.rot)
 
     block0.posX = block0_X;
     block0.sprite.x = block0_X;
@@ -887,32 +943,47 @@ export const rotate = () => {
 const checkCompleteRow = () => {
 
 
-  console.log(  rowsGrid  )
+
+for (let index = 0; index < rowsGrid.length; index++) {
+  const completeRow = rowsGrid[index];
+
+let columsCounter=0
+let completeGridCounter=0
+for (let index = 0; index < completeRow.length; index++) {
+  const element = completeRow[index];
+columsCounter++
 
 
-// for (let index = 0; index < rowsGrid.length; index++) {
-//   const element = rowsGrid[index];
+if(element.free===false){
+
+  completeGridCounter++
+
+}
+
+
+
+
+   let gridPoint = new PIXI.Graphics();
+        gridPoint.beginFill(element.free?0xC51D0D:0x437B07);
+        gridPoint.drawRect(element.x, element.y, 10, 10);
+        tetrisAreaContainer.addChild(gridPoint);
+
+
+
+
+}
+
+console.log( columsCounter,  completeGridCounter   )
+
+if(columsCounter===completeGridCounter){
+
+  console.log("linea compelta")
+}
+
+
+
   
-// let rowGridBlocks=
-
-
-// grid.filter(
-//   (e) => e.x === element
-// );
-
-
-// console.log(  rowGridBlocks  )
-
-
-
-
-
-
-
-
-
-
-// }
+}
 
 
 }
